@@ -13,5 +13,9 @@ public class BookController {
 	public String bookRegister() {
 		return "bookRegister";
 	}
+	@GetMapping("/available_books")
+	public String availableBooks() {
+		return "availableBooks";
+	}
 	
 }
