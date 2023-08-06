@@ -1,17 +1,25 @@
 package br.com.gabrielbaratella.bookstore.BookStore.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.gabrielbaratella.bookstore.BookStore.Controller.Entity.Book;
+import br.com.gabrielbaratella.bookstore.BookStore.Controller.Entity.MyBookList;
 import br.com.gabrielbaratella.bookstore.BookStore.service.BookService;
+import br.com.gabrielbaratella.bookstore.BookStore.service.MyBookListService;
 
 @Controller
 public class BookController {
 	
 	@Autowired
 	private BookService service;
+	
+	@Autowired
+	private MyBookListService myBookService;
 	
 	@GetMapping("/")
 	public String home() {
@@ -23,9 +31,18 @@ public class BookController {
 		return "bookRegister";
 	}
 	
+	@GetMapping("/my_books")
+	public String myBooks() {
+		return "myBooks";
+	}
+	
 	@GetMapping("/available_books")
-	public String availableBooks() {
-		return "availableBooks";
+	public ModelAndView availableBooks() {
+		List<Book> listaDeLivros = service.getAllBook();
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("availableBooks");
+		mav.addObject("book", listaDeLivros);
+		return mav;
 	}
 	
 	@PostMapping("/save")
@@ -33,5 +50,13 @@ public class BookController {
 			service.save(b);
 			return "redirect:/available_books";
 		}
+	
+	@RequestMapping("/mylist/{id}")
+	public String getMyList(@PathVariable("id") int id) {
+		Book b = service.getBookById(id);
+		MyBookList mb = new MyBookList(b.getId(), b.getName(), b.getAuthor(), b.getPrice());
+		myBookService.saveMyBook(mb);
+		return "redirect:/my_books";
+	}
 	
 }

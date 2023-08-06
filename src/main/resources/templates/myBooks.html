@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>BookStore</title>
+	<title>My Books</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
@@ -24,7 +24,8 @@
 						<a class="nav-link active text-white" aria-current="page" href="/">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active text-white" aria-current="page" href="available_books">Available Books</a>
+						<a class="nav-link active text-white" aria-current="page" href="available_books">Available
+							Books</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link active text-white" aria-current="page" href="my_books">My Books</a>
@@ -36,11 +37,34 @@
 			<a class="nav-link text-white text-center" href="book_register">Register a new Book</a>
 		</div>
 	</nav>
-	
-	<div class="container text-center my-5">
-		<h1>"Bem vindo !"</h1>
-		<h6>"Etiam vitae purus arcu. Sed at ante vel ante congue volutpat. In venenatis, arcu quis dignissim maximus, dui quam scelerisque neque, id pulvinar elit quam ac urna. Nunc sed nisi ut erat ultrices lacinia. Donec vitae est vel massa vehicula viverra in vel felis. Integer euismod erat vel lectus tempor, vel blandit est sagittis. Aenean vitae elit nec mi suscipit pulvinar in sit amet turpis. Sed congue, nisl id pellentesque elementum, velit tellus consectetur purus, sit amet aliquam arcu purus a enim. Fusce scelerisque, eros a elementum dictum, felis nulla tristique nunc, in fringilla velit purus nec sapien."</h6>
-		<img src="/images/bg-image.jpg" width="500px">
+	<div class="container">
+		<div class="row justify-content-center my-3">
+			<div class="header col-md-6 text-center">
+				<h1>My books</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container my-5 col-md-6 text-center">
+		<table class="table table-striped table-hover">
+			<thead>
+				<tr>
+					<th scope="col">Id</th>
+					<th scope="col">Name</th>
+					<th scope="col">Author</th>
+					<th scope="col">Price</th>
+					<th scope="col">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="b : ${book}">
+					<td th:text="${b.id}"></td>
+					<td th:text="${b.name}"></td>
+					<td th:text="${b.author}"></td>
+					<td th:text="${b.price}"></td>
+					<td><a class="btn btn-secondary btn-sm" text-center th:href="@{/myList/{id}(id=${b.id})}">Add To MyBook</a></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
