@@ -1,1 +1,1 @@
-src/main/resources/* linguist-vendored
+*.java linguist-language=Java
